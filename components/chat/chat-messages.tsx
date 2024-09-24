@@ -29,6 +29,11 @@ interface ChatMessageProps {
   type: "channel" | "conversation";
 }
 
+interface Group {
+  items: MessageWithMemberWithProfile[];
+  // Add any other properties of the group if needed
+}
+
 export const ChatMessages = ({
   name,
   member,
@@ -108,7 +113,7 @@ export const ChatMessages = ({
       )}
 
       <div className="flex flex-col-reverse mt-auto">
-        {data?.pages?.map((group, i) => (
+        {data?.pages?.map((group: Group, i: number) => (
           <Fragment key={i}>
             {group.items.map((message: MessageWithMemberWithProfile) => (
               <ChatItem
