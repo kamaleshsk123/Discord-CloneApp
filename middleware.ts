@@ -6,17 +6,14 @@ const isPublicRoute = createRouteMatcher([
 ]);
 
 export default clerkMiddleware((auth, req) => {
-  console.log("Middleware triggered for route: ", req.nextUrl.pathname);
-
-  // Skip authentication for public routes
-  if (isPublicRoute(req)) {
-    return; // Allow access without authentication
+  if (!isPublicRoute(req)) {
+    auth(); // Ensure auth is applied for protected routes
   }
-
-  const { userId } = auth(); // Ensure auth is called properly
-  if (!userId) {
-    throw new Error("User not authenticated");
-  }
-
-  // Proceed with your logic for authenticated routes
 });
+
+export const config = {
+  matcher: [
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    "/(api|trpc)(.*)",
+  ],
+};
