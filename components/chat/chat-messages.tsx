@@ -1,5 +1,5 @@
 "use client"; // Add this line to make it a client component
-import { Fragment, useEffect, useRef, ElementRef } from "react";
+import { Fragment, useRef, ElementRef } from "react";
 import { Member, Message, Profile } from "@prisma/client";
 import { ChatWelcome } from "./chat-welcome";
 import { useChatQuery } from "@/hooks/use-chat-query";

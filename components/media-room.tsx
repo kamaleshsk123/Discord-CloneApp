@@ -21,12 +21,12 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
   console.log("MediaRoom component rendered");
 
   useEffect(() => {
-    if (!user?.username || !user?.username) {
+    if (!user?.username) {
       console.log("User name not available, exiting effect.");
       return;
     }
 
-    const name = `${user.username} ${user.username}`;
+    const name = `${user.username}`;
     console.log("Fetching token for room:", chatId, "username:", name);
 
     const fetchUrl = `/api/livekit?room=${chatId}&username=${name}`;
@@ -48,7 +48,7 @@ export const MediaRoom = ({ chatId, video, audio }: MediaRoomProps) => {
         console.log("Fetch error:", e);
       }
     })();
-  }, [user?.username, user?.username, chatId]);
+  }, [user?.username, chatId]);
 
   if (error) {
     return <div>Error: {error}</div>;

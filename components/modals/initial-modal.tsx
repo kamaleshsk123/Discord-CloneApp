@@ -1,7 +1,7 @@
 "use client";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import axios from "axios";
 
 import {
@@ -11,8 +11,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogClose,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 import {
@@ -41,7 +39,7 @@ const formSchema = z.object({
 
 export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl] = useState("");
   const router = useRouter();
 
   useEffect(() => {
