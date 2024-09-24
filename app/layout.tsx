@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { Roboto_Slab, Alegreya, Merriweather } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
