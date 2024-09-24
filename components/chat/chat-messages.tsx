@@ -65,16 +65,16 @@ export const ChatMessages = ({
 
   // Trigger when data (messages) is updated
 
-  if (status === "pending") {
-    return (
-      <div className="flex flex-col h-full justify-center items-center flex-1 ">
-        <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4" />
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          Loading messages...
-        </p>
-      </div>
-    );
-  }
+  // if (status === "pending") {
+  //   return (
+  //     <div className="flex flex-col h-full justify-center items-center flex-1 ">
+  //       <Loader2 className="h-7 w-7 text-zinc-500 animate-spin my-4" />
+  //       <p className="text-xs text-zinc-500 dark:text-zinc-400">
+  //         Loading messages...
+  //       </p>
+  //     </div>
+  //   );
+  // }
 
   if (status === "error") {
     return (
