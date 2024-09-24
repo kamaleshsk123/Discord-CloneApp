@@ -4,6 +4,11 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-export const db = globalThis.prisma || new PrismaClient();
+// Use const to define db
+const db = globalThis.prisma || new PrismaClient();
 
-if (process.env.NODE_ENV !== "production") globalThis.prisma = db;
+if (process.env.NODE_ENV !== "production") {
+  globalThis.prisma = db; // This is not using var, so no changes needed here
+}
+
+export { db };

@@ -11,6 +11,12 @@ interface FileUploadProps {
   endpoint: "messageFile" | "serverImage";
 }
 
+// Define the expected structure of the upload response
+interface UploadResponse {
+  url: string;
+  // Add other fields if there are any
+}
+
 export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
   const fileType = value?.split(".").pop();
 
@@ -57,7 +63,7 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
   return (
     <UploadDropzone
       endpoint={endpoint}
-      onClientUploadComplete={(res: any) => {
+      onClientUploadComplete={(res: UploadResponse[]) => {
         console.log("Upload result:", res);
         onChange(res?.[0]?.url);
       }}
