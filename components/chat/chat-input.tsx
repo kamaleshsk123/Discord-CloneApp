@@ -7,10 +7,11 @@ import qs from "query-string";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Plus } from "lucide-react";
+import { Plus, SendHorizonal } from "lucide-react"; // Import Send icon
 import { useModal } from "@/hooks/use-modal-store";
 import { EmojiPicker } from "@/components/emoji-picker";
 import { useRouter } from "next/navigation";
+
 interface ChatInputProps {
   apiUrl: string;
   query: Record<string, string>;
@@ -75,7 +76,17 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                     {...field}
                     className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
                   />
-                  <div className="absolute top-7 right-8 ">
+                  <div className="absolute top-[30px]  right-16">
+                    {/* Send button with the send icon */}
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="text-zinc-500 dark:text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition"
+                    >
+                      <SendHorizonal className="h-5 w-5" />
+                    </button>
+                  </div>
+                  <div className="absolute top-7 right-8">
                     <EmojiPicker
                       onChange={(emoji: string) =>
                         field.onChange(`${field.value} ${emoji}`)
