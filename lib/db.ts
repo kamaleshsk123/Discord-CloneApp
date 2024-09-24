@@ -1,14 +1,14 @@
 import { PrismaClient } from "@prisma/client";
 
 declare global {
-  var prisma: PrismaClient | undefined;
+  var prisma: PrismaClient | undefined; // Declaring global variable, this is fine
 }
 
-// Use const to define db
+// Create or reuse PrismaClient instance
 const db = globalThis.prisma || new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
-  globalThis.prisma = db; // This is not using var, so no changes needed here
+  globalThis.prisma = db; // This is using globalThis without var
 }
 
 export { db };
