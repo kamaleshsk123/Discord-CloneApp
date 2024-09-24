@@ -7,17 +7,22 @@ export async function PATCH(
   { params }: { params: { serverId: string } }
 ) {
   try {
-    const profile = await currentProfile;
-    const { name, imageUrl } = await req.json();
+    // Fetch the current profile
+    const profileData = await currentProfile();
 
-    if (!profile) {
+    // Check if the profile is available
+    if (!profileData) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    // Extract name and imageUrl from the request body
+    const { name, imageUrl } = await req.json();
+
+    // Update the server in the database
     const server = await db.server.update({
       where: {
         id: params.serverId,
-        profileId: profile.id,
+        profileId: profileData.id,
       },
       data: {
         name,
@@ -25,9 +30,10 @@ export async function PATCH(
       },
     });
 
+    // Return the updated server details
     return NextResponse.json(server);
   } catch (error) {
-    console.log("[SERVER_ID_PATCH]", error);
+    console.error("[SERVER_ID_PATCH]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
@@ -37,22 +43,26 @@ export async function DELETE(
   { params }: { params: { serverId: string } }
 ) {
   try {
-    const profile = await currentProfile;
+    // Fetch the current profile
+    const profileData = await currentProfile();
 
-    if (!profile) {
+    // Check if the profile is available
+    if (!profileData) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    // Delete the server from the database
     const server = await db.server.delete({
       where: {
         id: params.serverId,
-        profileId: profile.id,
+        profileId: profileData.id,
       },
     });
 
+    // Return the deleted server details
     return NextResponse.json(server);
   } catch (error) {
-    console.log("[SERVER_ID_DELETE]", error);
+    console.error("[SERVER_ID_DELETE]", error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
