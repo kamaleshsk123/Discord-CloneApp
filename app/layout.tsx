@@ -6,6 +6,8 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { SocketProvider } from "@/components/providers/socket-providers";
 import { QueryProvider } from "@/components/providers/query-providers";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const robotoSlab = Roboto_Slab({
   weight: ["400", "700"],
@@ -50,6 +52,7 @@ export default function RootLayout({
             <SocketProvider>
               <ModalProvider />
               <QueryProvider>{children}</QueryProvider>
+              <ToastContainer position="top-right" autoClose={5000} />
             </SocketProvider>
           </ThemeProvider>
         </body>

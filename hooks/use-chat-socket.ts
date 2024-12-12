@@ -7,6 +7,7 @@ type ChatSocketProps = {
   addKey: string;
   updateKey: string;
   queryKey: string;
+  onMessageReceived?: (message: MessageWithMemberWithProfile) => void;
 };
 
 type MessageWithMemberWithProfile = Message & {
@@ -14,9 +15,10 @@ type MessageWithMemberWithProfile = Message & {
 };
 
 export const useChatSocket = ({
+  queryKey,
   addKey,
   updateKey,
-  queryKey,
+  onMessageReceived,
 }: ChatSocketProps) => {
   const { socket } = useSocket();
   const queryClient = useQueryClient();
@@ -43,6 +45,10 @@ export const useChatSocket = ({
 
         return { ...oldData, pages: newData };
       });
+
+      if (onMessageReceived) {
+        onMessageReceived(message);
+      }
     });
 
     // Handle updating existing messages
@@ -56,7 +62,6 @@ export const useChatSocket = ({
           return {
             ...page,
             items: page.items.map((item: MessageWithMemberWithProfile) => {
-              // Check if the message ID matches the updated message ID
               if (item.id === updatedMessage.id) {
                 return updatedMessage;
               }
@@ -74,5 +79,5 @@ export const useChatSocket = ({
       socket.off(addKey);
       socket.off(updateKey);
     };
-  }, [queryClient, addKey, updateKey, queryKey, socket]);
+  }, [queryClient, addKey, updateKey, queryKey, onMessageReceived, socket]);
 };
