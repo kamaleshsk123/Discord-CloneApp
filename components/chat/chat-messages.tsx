@@ -3,11 +3,13 @@ import { Fragment, useRef, ElementRef } from "react";
 import { Member, Message, Profile } from "@prisma/client";
 import { ChatWelcome } from "./chat-welcome";
 import { useChatQuery } from "@/hooks/use-chat-query";
-import { Loader2, ServerCrash } from "lucide-react";
+import { Loader2, ServerCrash, Mail } from "lucide-react";
 import { ChatItem } from "./chat-item";
 import { format } from "date-fns";
 import { useChatSocket } from "@/hooks/use-chat-socket";
 import { useChatScroll } from "@/hooks/use-chat-scroll";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm";
 
@@ -59,7 +61,17 @@ export const ChatMessages = ({
       paramValue,
     });
 
-  useChatSocket({ queryKey, addKey, updateKey });
+  useChatSocket({
+    queryKey,
+    addKey,
+    updateKey,
+    onMessageReceived: (message) => {
+      toast.info(`${message.member.profile.name}: ${message.content}`, {
+        icon: <Mail size={16} />,
+      });
+    },
+  });
+
   useChatScroll({
     chatRef,
     bottomRef,
@@ -67,8 +79,6 @@ export const ChatMessages = ({
     shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
     count: data?.pages?.[0]?.items?.length ?? 0,
   });
-
-  // Trigger when data (messages) is updated
 
   if (status === "pending") {
     return (
